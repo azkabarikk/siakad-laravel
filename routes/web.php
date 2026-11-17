@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MahasiswaController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MataKuliahController;
+use App\Http\Controllers\ProdiController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -50,3 +51,10 @@ Route::middleware(['auth', 'role:1'])->group(function () {
         ->parameters(['mata-kuliah' => 'id']);
 });
 
+Route::middleware(['auth', 'role:1,2'])
+    ->resource('prodi', ProdiController::class)
+    ->only(['index']);
+
+Route::middleware(['auth', 'role:1'])
+    ->resource('prodi', ProdiController::class)
+    ->except(['index', 'show']);
