@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\MataKuliah;
 class MataKuliahController extends Controller
 {
     /**
@@ -11,8 +11,10 @@ class MataKuliahController extends Controller
      */
     public function index()
     {
-        //
+    $data = MataKuliah::orderBy('kode_mk')->get();
+    return view('mata-kuliah.index', compact('data'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -61,4 +63,5 @@ class MataKuliahController extends Controller
     {
         //
     }
+
 }
