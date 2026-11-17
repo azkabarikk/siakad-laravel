@@ -21,7 +21,7 @@ class MataKuliahController extends Controller
      */
     public function create()
     {
-        //
+    return view('mata-kuliah.create');
     }
 
     /**
@@ -29,7 +29,16 @@ class MataKuliahController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    $validated = $request->validate([
+        'kode_mk' => 'required|string|max:10|unique:mata_kuliah,kode_mk',
+        'nama_mk' => 'required|string|max:100',
+        'sks' => 'required|integer|between:1,6',
+    ]);
+
+    MataKuliah::create($validated);
+
+    return redirect()->route('mata-kuliah.index')
+        ->with('success', 'Mata kuliah berhasil ditambahkan.');
     }
 
     /**
