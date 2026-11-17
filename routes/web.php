@@ -24,3 +24,7 @@ Route::get('/login', [AuthPageController::class, 'login']);
 Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
 
 Route::get('/mahasiswa/{id}', [MahasiswaController::class, 'show']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

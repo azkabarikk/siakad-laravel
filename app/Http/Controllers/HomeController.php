@@ -2,22 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function myHome() {
-    return 'Halaman dari HomeController';
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
     }
 
-    public function about(): View {
-    return view('about');
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
+    {
+        return view('home');
     }
-
-    public function contact(): View {
-    return view('contact');
-    }
-
 }
-
