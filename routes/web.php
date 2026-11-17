@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 // use App\Http\Controllers\AuthPageController;
 use App\Http\Controllers\MahasiswaController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\MataKuliahController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,3 +38,15 @@ Route::middleware(['auth', 'isAdministrator'])
 
 Route::middleware(['auth', 'role:1,2'])
     ->get('/nilai', fn () => view('nilai'));
+
+Route::middleware(['auth', 'role:1,2'])->group(function () {
+    Route::resource('mata-kuliah', MataKuliahController::class)
+        ->only(['index']);
+});
+
+Route::middleware(['auth', 'role:1'])->group(function () {
+    Route::resource('mata-kuliah', MataKuliahController::class)
+        ->only(['create', 'store', 'edit', 'update', 'destroy'])
+        ->parameters(['mata-kuliah' => 'id']);
+});
+
