@@ -52,17 +52,30 @@ class MataKuliahController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+    $mk = MataKuliah::findOrFail($id);
+    return view('mata-kuliah.edit', compact('mk'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+    $mk = MataKuliah::findOrFail($id);
+
+    $validated = $request->validate([
+        'kode_mk' => 'required|string|max:10|unique:mata_kuliah,kode_mk,'
+            . $id . ',id_mk',
+        'nama_mk' => 'required|string|max:100',
+        'sks' => 'required|integer|between:1,6',
+    ]);
+
+    $mk->update($validated);
+
+    return redirect()->route('mata-kuliah.index')
+        ->with('success', 'Mata kuliah berhasil diperbarui.');
     }
 
     /**
