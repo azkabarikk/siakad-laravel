@@ -29,3 +29,11 @@ Route::get('/mahasiswa/{id}', [MahasiswaController::class, 'show']);
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware(['auth', 'isAdministrator'])
+    ->group(function () {
+        Route::get('/admin', fn () => view('admin'));
+    });
+
+Route::middleware(['auth', 'role:1,2'])
+    ->get('/nilai', fn () => view('nilai'));
