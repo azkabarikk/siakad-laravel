@@ -1,3 +1,9 @@
+@if ($errors->any())
+    @foreach ($errors->all() as $e)
+        <p>{{ $e }}</p>
+    @endforeach
+@endif
+
 <form method="POST" action="/mahasiswa">
     @csrf
     <input name="nim" value="{{ old('nim') }}">
