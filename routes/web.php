@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\ProdiController;
 
+Route::get('/mahasiswa/create',
+    [MahasiswaController::class, 'create']);
+
+Route::post('/mahasiswa',
+    [MahasiswaController::class, 'store']);
+
 Route::get('/', function () {
     return view('welcome');
 });
