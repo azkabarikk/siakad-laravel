@@ -20,6 +20,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::share('namaSistem', 'Siakad');
+        View::share('namaSistem', config('siakad.nama'));
     }
 }
