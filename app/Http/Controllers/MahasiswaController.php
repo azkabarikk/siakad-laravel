@@ -20,6 +20,8 @@ class MahasiswaController extends Controller
 
     public function create()
     {
+    //     dd(session('_old_input'));
+
     $prodi = Prodi::all();
     return view('mahasiswa.create', compact('prodi'));
     }
