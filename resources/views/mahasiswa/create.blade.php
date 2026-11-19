@@ -20,3 +20,5 @@
     </select>
     <button type="submit">Simpan</button>
 </form>
+
+<p>SPP: {{ numberToRupiah(3500000) }}</p>
