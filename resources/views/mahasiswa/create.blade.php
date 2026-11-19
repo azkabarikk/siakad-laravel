@@ -4,6 +4,8 @@
     @endforeach
 @endif
 
+<h1>Form Mahasiswa - {{ $namaSistem }}</h1>
+
 <form method="POST" action="/mahasiswa">
     @csrf
     <input name="nim" value="{{ old('nim') }}">

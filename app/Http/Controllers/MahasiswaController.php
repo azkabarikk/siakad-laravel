@@ -3,44 +3,47 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreMahasiswaRequest;
 use App\Models\Mahasiswa;
 use App\Models\Prodi;
 
 class MahasiswaController extends Controller
 {
-    public function index() {
-    $data = Mahasiswa::with('prodi')->get();
-    return view('mahasiswa.index', compact('data'));
+    public function index()
+    {
+        $data = Mahasiswa::with('prodi')->get();
+        return view('mahasiswa.index', compact('data'));
     }
 
-    public function show($id) {
-    $m = Mahasiswa::with('mataKuliah')->findOrFail($id);
-    return view('mahasiswa.show', compact('m'));
+    public function show($id)
+    {
+        $m = Mahasiswa::with('mataKuliah')->findOrFail($id);
+        return view('mahasiswa.show', compact('m'));
     }
 
     public function create()
     {
-    //     dd(session('_old_input'));
+        // dd(session('_old_input'));
 
-    $prodi = Prodi::all();
-    return view('mahasiswa.create', compact('prodi'));
+        $prodi = Prodi::all();
+        return view('mahasiswa.create', compact('prodi'));
     }
 
-    public function store(Request $request)
+    public function store(StoreMahasiswaRequest $request)
     {
-    $validated = $request->validate([
-        'nim' => 'required|string|size:7|unique:mahasiswa,nim',
-    'nama' => 'required|string|min:3|max:100',
-    'id_prodi' => 'required|exists:prodi,id_prodi',
-    ], [
-    'nim.required' => 'NIM wajib diisi.',
-    'nim.unique' => 'NIM sudah terdaftar.',
-    'nama.min' => 'Nama minimal 3 karakter.',
-    ]);
+        $validated = $request->validate([
+            'nim' => 'required|string|size:7|unique:mahasiswa,nim',
+            'nama' => 'required|string|min:3|max:100',
+            'id_prodi' => 'required|exists:prodi,id_prodi',
+        ], [
+            'nim.required' => 'NIM wajib diisi.',
+            'nim.unique' => 'NIM sudah terdaftar.',
+            'nama.min' => 'Nama minimal 3 karakter.',
+        ]);
 
-    Mahasiswa::create($validated);
-    return redirect('/mahasiswa')
-        ->with('success', 'Data tersimpan');
+        Mahasiswa::create($request->validated());
+
+        return redirect('/mahasiswa')
+            ->with('success', 'Data tersimpan');
     }
-
 }
